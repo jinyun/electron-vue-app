@@ -24,7 +24,7 @@ jobs:
       with:
         fetch-depth: 0
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
     # 设置 Node.js 环境
     - name: Setup Node.js
