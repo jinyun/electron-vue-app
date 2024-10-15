@@ -15,7 +15,7 @@
   removePackageScripts: true,
 
   directories: {
-    output: "release/v${version}", // 输出目录
+    output: "release", // 输出目录
     buildResources: "installer/resources", // 构建资源目录
   },
   files: ["dist", "dist-electron"], // 要包含在最终应用程序中的文件
