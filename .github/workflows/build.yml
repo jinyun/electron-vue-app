@@ -44,7 +44,7 @@ jobs:
       if: matrix.os == 'windows-latest'  # 仅在 Windows 环境中运行
       run: npm run build:win
 
-    # 为 Linux 构建
+    # 为 Linux 构建 // 
     - name: Build for Linux
       if: matrix.os == 'ubuntu-latest'  # 仅在 Ubuntu（Linux）环境中运行
       run: npm run build:linux
