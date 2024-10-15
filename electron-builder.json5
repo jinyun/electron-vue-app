@@ -1,0 +1,52 @@
+// @see - https://www.electron.build/configuration/configuration
+{
+  $schema: "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+  appId: "com.jinyunguo.eva",
+  asar: true,
+  productName: "EVA",
+
+  protocols: {
+    name: "Deeplink Example",
+    // 别忘了为 `linux.desktop` 条目设置 `MimeType: "x-scheme-handler/deeplink"`！
+    schemes: ["deeplink"],
+  },
+  // "store" | "normal" | "maximum". - 对于测试构建，使用 'store' 可以显著减少构建时间。
+  compression: "store",
+  removePackageScripts: true,
+
+  directories: {
+    output: "release/v${version}", // 输出目录
+    buildResources: "installer/resources", // 构建资源目录
+  },
+  files: ["dist", "dist-electron"], // 要包含在最终应用程序中的文件
+  mac: {
+    target: ["dmg"], // macOS 目标格式
+    artifactName: "${productName}-Mac-${version}-Installer.${ext}", // macOS 安装程序文件名格式
+  },
+  win: {
+    target: [
+      {
+        target: "nsis",
+        arch: ["x64"],
+      },
+    ], // Windows 目标格式
+    artifactName: "${productName}-Windows-${version}-Setup.${ext}", // Windows 安装程序文件名格式
+  },
+  nsis: {
+    oneClick: false, // 是否一键安装
+    perMachine: false, // 是否为所有用户安装
+    allowToChangeInstallationDirectory: true, // 允许用户更改安装目录
+    deleteAppDataOnUninstall: false, // 卸载时是否删除应用数据
+  },
+  linux: {
+    desktop: {
+      StartupNotify: "true",
+      Encoding: "UTF-8",
+      MimeType: "x-scheme-handler/deeplink",
+    },
+    target: ["AppImage"], // Linux 目标格式
+    artifactName: "${productName}-Linux-${version}.${ext}", // Linux 安装程序文件名格式
+    icon: "build/app.png",
+    category: "Utility", // Linux 应用程序类别，决定应用在菜单中的位置
+  },
+}
