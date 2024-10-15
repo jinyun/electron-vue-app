@@ -21,8 +21,10 @@ jobs:
     steps:
     # 检出代码
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
       env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }} #
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
     # 设置 Node.js 环境
     - name: Setup Node.js
