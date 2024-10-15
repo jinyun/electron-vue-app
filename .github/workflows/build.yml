@@ -5,7 +5,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'v*'  # 当推送到以 'v' 开头的分支时触发（例如 v1.0.0, v2.1.3）
+      - 'v*'  # 当推送到以 'v' 开头的标签时触发（例如 v1.0.0, v2.1.3）
 
 # 定义要执行的作业
 jobs:
@@ -22,8 +22,8 @@ jobs:
     # 检出代码
     - uses: actions/checkout@v3
       with:
-        fetch-depth: 0
-    
+        fetch-depth: 0  # 获取完整的提交历史
+
     # 设置 Node.js 环境
     - name: Setup Node.js
       uses: actions/setup-node@v3
@@ -34,24 +34,24 @@ jobs:
     - name: Install dependencies
       run: npm ci  # 使用 clean install 以确保一致性
 
-    # 为 macOS 构建  
+    # 为 macOS 构建
     - name: Build for macOS
-      if: matrix.os == 'macos-latest'  # 仅在 macOS 环境中运行
+      if: matrix.os == 'macos-latest'
       run: npm run build:mac
 
     # 为 Windows 构建
     - name: Build for Windows
-      if: matrix.os == 'windows-latest'  # 仅在 Windows 环境中运行
+      if: matrix.os == 'windows-latest'
       run: npm run build:win
 
-    # 为 Linux 构建 // 
+    # 为 Linux 构建
     - name: Build for Linux
-      if: matrix.os == 'ubuntu-latest'  # 仅在 Ubuntu（Linux）环境中运行
+      if: matrix.os == 'ubuntu-latest'
       run: npm run build:linux
 
     # 上传构建产物
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: EVA-${{ matrix.os }}-${{ github.ref_name }}  # 使用操作系统名称和分支名称来命名产物
-        path: release/${{ github.ref_name }}  # 指定要上传的目录
+        name: EVA-${{ matrix.os }}-${{ github.ref_name }}
+        path: release/  # 确保你的构建脚本将产物放在release目录下
